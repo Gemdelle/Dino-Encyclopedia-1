@@ -1,7 +1,9 @@
 .wrapper {
   height: 100vh;
+  width: 100vw;
   display: grid;
   place-items: center;
+  z-index: 10;
 }
 
 .dialogueContainer {
@@ -11,7 +13,7 @@
   justify-content: start;
   align-items: end;
   position: relative;
-  /* background-color: blue; */
+  background-color: blue;
 }
 
 .dialogue {

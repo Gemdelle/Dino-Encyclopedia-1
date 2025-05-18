@@ -1,17 +1,18 @@
 import {useEffect, useRef, useState} from "react";
 import { Nav } from "../../../components";
 import styles from "./Book.module.css";
-import TemplateImageLeftDownAndTopRight
-    from "./templates/TemplateImageLeftDownAndTopRight/TemplateImageLeftDownAndTopRight.tsx";
-import TemplateImageLeftDown from "./templates/TemplateImageLeftDown/TemplateImageLeftDown.tsx";
-import TemplateImageTopRight from "./templates/TemplateImageTopRight/TemplateImageTopRight.tsx";
+
 import TemplateOnlyText from "./templates/TemplateOnlyText/TemplateOnlyText.tsx";
+import TemplateImageLeft from "./templates/TemplateImageLeft/TemplateImageLeft.tsx";
+import TemplateImageRightTop, { TemplateImageBottomRight } from "./templates/TemplateImageBottomRight/TemplateImageBottomRight.tsx";
+import TemplateImageBottomLeftAndTopRight from "./templates/TemplateImageBottomLeftAndTopRight/TemplateImageBottomLeftAndTopRight.tsx";
 
 enum BookType {
-    templateImageLeftDownAndTopRight = "templateImageLeftDownAndTopRight",
-    templateImageLeftDown = "templateImageLeftDown",
+    templateImageBottomLeftAndTopRight = "templateImageBottomLeftAndTopRight",
+    templateImageLeft = "templateImageLeft",
     templateOnlyText = "templateOnlyText",
     templateImageTopRight = "templateImageTopRight",
+    templateImageBottomRight = "templateImageBottomRight"
 }
 
 export const Book = ({book}) => {
@@ -44,10 +45,14 @@ export const Book = ({book}) => {
                 page.classList.remove(styles.flipped);
                 const previousPage = pagesArray[pageIndex - 1] as HTMLElement | undefined;
                 previousPage?.classList.remove(styles.flipped);
+                console.log("pageIndex", pageIndex);
+                console.log(previousPage?.classList);
             } else {
                 page.classList.add(styles.flipped);
                 const nextPage = pagesArray[pageIndex + 1] as HTMLElement | undefined;
                 nextPage?.classList.add(styles.flipped);
+                console.log("pageIndex", pageIndex);
+                console.log(nextPage?.classList);
             }
         };
         container.addEventListener("click", handlePageClick);
@@ -66,16 +71,19 @@ export const Book = ({book}) => {
                 </div>
                 {bookPages.map((page, i) => {
                     switch(page.type){
-                        case BookType.templateImageLeftDownAndTopRight:
-                            return (<TemplateImageLeftDownAndTopRight upperText={page.upperText} imageLeftDownSrc={page.imageLeftDownSrc} imageRightUpSrc={page.imageRightUpSrc} lowerText={page.lowerText} />);
-                        case BookType.templateImageLeftDown:
-                            return (<TemplateImageLeftDown upperText={page.upperText} imageLeftDownSrc={page.imageLeftDownSrc} lowerText={page.lowerText} />);
-                        case BookType.templateImageTopRight:
-                            return (<TemplateImageTopRight upperText={page.upperText} imageRightUpSrc={page.imageRightUpSrc} lowerText={page.lowerText} />);
+                        case BookType.templateImageBottomLeftAndTopRight:
+                            return (<TemplateImageBottomLeftAndTopRight subtitle={page.subtitle} upperText={page.upperText} foodName={page.foodName} imageBottomLeftSrc={page.imageBottomLeftSrc} imageTopRightSrc={page.imageTopRightSrc} lowerText={page.lowerText} />);
+                        case BookType.templateImageLeft:
+                            return (<TemplateImageLeft imageLeftSrc={page.imageLeftSrc} title={page.title} subtitle={page.subtitle} text={page.text} />);
+                        case BookType.templateImageBottomRight:
+                            return (<TemplateImageBottomRight subtitle={page.subtitle} upperText={page.upperText} imageBottomRightSrc={page.imageBottomRightSrc} lowerText={page.lowerText} />);
                         default:
                             return (<TemplateOnlyText text={page.text}/>);
                     }
                 })}
+                <div className={`${styles.page} ${styles.backPage}`}>
+                    <img src={book.image} className={styles.bookImage}/>
+                </div>
             </div>
         </div>
     );

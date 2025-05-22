@@ -1,0 +1,37 @@
+.gallery__frame {
+	position: relative;
+	width: 100%;
+	filter: brightness(60%);
+	transition: all 1s ease-in-out;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* background-color: aqua; */
+}
+
+.gallery__frame:hover {
+	filter: brightness(100%);
+}
+
+.gallery__item-title {
+	position: absolute;
+	top: 0%;
+    font-size: 0.6vw;
+	font-family: "MedusaGothic";
+	margin-top: 29%;
+	height: 12%;
+	width: 60%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: rgb(235, 234, 221);
+	line-height: 1vw;
+	letter-spacing: 0.15vw;
+	z-index: 3;
+}
+
+.gallery__item-image{
+	z-index: 2;
+	height: 100%;
+}

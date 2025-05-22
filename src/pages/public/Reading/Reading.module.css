@@ -1,4 +1,4 @@
-.container-page {
+.reading-page {
     width: 100vw;
     height: 100vh;
     background-image: url(/public/assets/img/bg/rockBg.png);
@@ -10,3 +10,13 @@
     align-items: center;
 }
 
+.reading-page__content {
+    width: 90%;
+    height: 75%;
+    margin: 0 auto;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: blue;
+}

@@ -1,73 +1,114 @@
-import { useState } from 'react';
-import './Carousel.css';
+import React, { useState, CSSProperties } from 'react';
+import styles from './Carousel.module.css';
 import { useNavigate } from 'react-router-dom';
 
-const TOTAL_CARDS = 6;
+interface CarouselProps {
+  children: React.ReactNode;
+  links: string[];
+  accessText: string;
+  width: number;            // en vw
+  height: number;           // en vh
+  itemWidth: number;        // en %
+  itemHeight: number;       // en %
+  transformMain: string;    // ej. "translate(-50%, -37%) scale(1)"
+  transformLeft: string;    // ej. "translate(-163%, -36%) scale(0.9)"
+  transformRight: string;   // ej. "translate(68%, -37%) scale(0.9)"
+  arrowOffset: number;      // en %
+  visitBtnBottom: number;   // en %, puede ser negativo
+}
 
-export function Carousel() {
+export function Carousel({
+  children,
+  links,
+  accessText,
+  width,
+  height,
+  itemWidth,
+  itemHeight,
+  transformMain,
+  transformLeft,
+  transformRight,
+  arrowOffset,
+  visitBtnBottom
+}: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(1);
   const navigate = useNavigate();
+  const TOTAL_CARDS = React.Children.count(children);
 
-  const getClass = (index: number) => {
-    if (index === currentIndex) return "carousel-item carousel-item--main";
-    if (index === (currentIndex - 1 + TOTAL_CARDS) % TOTAL_CARDS) return "carousel-item carousel-item--left";
-    if (index === (currentIndex + 1) % TOTAL_CARDS) return "carousel-item carousel-item--right";
-    return "carousel-item carousel-hidden";
+  const containerStyle: CSSProperties = {
+    width: `${width}vw`,
+    height: `${height}vh`
   };
 
-  const handleLeft = () => {
-    setCurrentIndex((prev) => (prev - 1 + TOTAL_CARDS) % TOTAL_CARDS);
+  const arrowLeftStyle: CSSProperties = {
+    left: `${arrowOffset}%`
+  };
+  const arrowRightStyle: CSSProperties = {
+    right: `${arrowOffset}%`
   };
 
-  const handleRight = () => {
-    setCurrentIndex((prev) => (prev + 1) % TOTAL_CARDS);
+  const getItemStyle = (idx: number): CSSProperties => {
+    let transform: string;
+    if (idx === currentIndex) transform = transformMain;
+    else if (idx === (currentIndex - 1 + TOTAL_CARDS) % TOTAL_CARDS)
+      transform = transformLeft;
+    else if (idx === (currentIndex + 1) % TOTAL_CARDS)
+      transform = transformRight;
+    else transform = '';
+
+    return {
+      width: `${itemWidth}%`,
+      height: `${itemHeight}%`,
+      transform
+    };
   };
 
-  const navigatePage = (route: string) => {
-    navigate(route);
+  const getClass = (idx: number) => {
+    if (idx === currentIndex) return `${styles['carousel__item']} ${styles['carousel__item--main']}`;
+    if (idx === (currentIndex - 1 + TOTAL_CARDS) % TOTAL_CARDS) return `${styles['carousel__item']} ${styles['carousel__item--left']}`;
+    if (idx === (currentIndex + 1) % TOTAL_CARDS) return `${styles['carousel__item']} ${styles['carousel__item--right']}`;
+    return `${styles['carousel__item']} ${styles['carousel__item--hidden']}`;
   };
-
-  function mostrarCarousel() {
-    return <div className="carousel">
-      <div className={`${getClass(0)} period triassic-1`}>
-        <span className="gallery-name">INFERIOR GALLERY</span>
-        <button className='visit-gallery-btn' onClick={() => navigatePage("/triassic-inferior")}>VISIT</button>
-      </div>
-      <div className={`${getClass(1)} period jurassic-1`}>
-        <span className="gallery-name">INFERIOR GALLERY</span>
-        <button className='visit-gallery-btn' onClick={() => navigatePage("/jurassic-inferior")}>VISIT</button>
-      </div>
-      <div className={`${getClass(2)} period cretaceous-1`}>
-        <span className="gallery-name">INFERIOR GALLERY</span>
-        <button className='visit-gallery-btn' onClick={() => navigatePage("/cretaceous-inferior")}>VISIT</button>
-      </div>
-      <div className={`${getClass(3)} period triassic-2`}>
-        <span className="gallery-name">INFERIOR GALLERY</span>
-        <button className='visit-gallery-btn' onClick={() => navigatePage("/triassic-medium")}>VISIT</button>
-      </div>
-      <div className={`${getClass(4)} period jurassic-2`}>
-        <span className="gallery-name">INFERIOR GALLERY</span>
-        <button className='visit-gallery-btn' onClick={() => navigatePage("/jurassic-medium")}>VISIT</button>
-      </div>
-      <div className={`${getClass(5)} period cretaceous-2`}>
-        <span className="gallery-name">INFERIOR GALLERY</span>
-        <button className='visit-gallery-btn' onClick={() => navigatePage("/cretaceous-medium")}>VISIT</button>
-      </div>
-    </div>;
-  }
 
   return (
-    <div id="carousel-container" className="carousel-container">
-      <div className="carousel-container--left">
-        <button className="carousel-btn left-arrow" onClick={handleLeft}>
-        </button>
+    <div
+      id="carousel-container"
+      className={styles['carousel__container']}
+      style={containerStyle}
+    >
+      <div className={styles['carousel__container--left']}>
+        <button
+          className={`${styles['carousel__btn']} ${styles['carousel__arrow--left']}`}
+          style={arrowLeftStyle}
+          onClick={() => setCurrentIndex(prev => (prev - 1 + TOTAL_CARDS) % TOTAL_CARDS)}
+        />
       </div>
 
-      {mostrarCarousel()}
+      <div className={styles['carousel']}>
+        {React.Children.map(children, (child, index) => (
+          <div
+            key={index}
+            className={getClass(index)}
+            style={getItemStyle(index)}
+          >
+            {child}
+            <button
+              className={styles['carousel__visit-btn']}
+              style={{ bottom: `${visitBtnBottom}%` }}
+              onClick={() => navigate(links[index])}
+            >
+              {accessText}
+            </button>
+          </div>
+        ))}
+      </div>
 
-      <div className="carousel-carousel--right">
-        <button className="carousel-btn right-arrow" onClick={handleRight}>
-        </button>
+      <div className={styles['carousel__container--right']}>
+        <button
+          className={`${styles['carousel__btn']} ${styles['carousel__arrow--right']}`}
+          style={arrowRightStyle}
+          onClick={() => setCurrentIndex(prev => (prev + 1) % TOTAL_CARDS)}
+        />
       </div>
     </div>
   );

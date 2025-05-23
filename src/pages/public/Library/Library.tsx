@@ -7,7 +7,6 @@ export const Library = () => {
     const { books } = booksData;
 
     return (
-
         <div className={styles["container-page"]}>
             <Nav />
             <Carousel
@@ -22,12 +21,15 @@ export const Library = () => {
                 transformRight="translate(68%, -37%) scale(0.9)"
                 arrowOffset={6}
                 visitBtnBottom={-5}
+                needHoverAnimation={false}
             >
                 {books.map((book) => (
                     <BookCover
                         key={book.isbn}
                         title={book.title}
                         image={book.coverImage}
+                        backImage={book.coverBackImage}
+                        backText={book.summary}
                     />
                 ))}
             </Carousel>

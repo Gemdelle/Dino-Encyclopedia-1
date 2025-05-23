@@ -1,0 +1,101 @@
+.kids-page {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  transform-origin: 0 0;
+  transition: transform 1.4s;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  user-select: none;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+}
+
+.page-content {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: brown; */
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.kids-1 {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  transform-origin: 0 0;
+  transition: transform 1.4s;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #122D64;
+}
+
+.kids-1 img {
+    width: auto;
+    height: 120%;
+    border: 15px solid #ECD685;
+}
+
+.kids-2 {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  transform-origin: 0 0;
+  transition: transform 1.4s;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  user-select: none;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: rgb(220, 229, 255);
+}
+
+.page-number {
+  height: 5vw;
+  width: 8vw;
+  background-image: url(/public/assets/img/books/kids-2/page-number.png);
+  background-position: center;
+  background-size: 100% 100%;
+  font-family: "Lato";
+  color: rgb(90, 90, 41);
+  font-size: 1.2vw;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+
+.page-number-par {
+  margin-left: 75%;
+}
+
+.page-number-impar {
+  margin-left: -75%;
+}

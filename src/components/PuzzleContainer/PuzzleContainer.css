@@ -6,20 +6,25 @@ html {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.puzzle-box {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  gap: 2rem;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 3px solid rgb(238, 229, 192);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+    /* background-color: blue; */
 }
+
+/* .puzzle-holder {
+  width: 93%;
+  height: 90%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: red;
+} */
 
 .puzzle-background {
   position: relative;
@@ -28,32 +33,28 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   padding: 1rem;
 }
 
-.puzzle-layout {
+.puzzle-frame {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   overflow: hidden;
+  background: linear-gradient(135deg, #987B45, #ECEAD2, #987B45);
 }
 
 .puzzle-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  background-color: rgba(42, 42, 42, 0.8);
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
+  margin-top: 5%;
+  margin-left: 1%;
 }
 
 .puzzle-container .puzzle-completed {
@@ -86,6 +87,10 @@ html {
   width: 100%;
 }
 
+.puzzle-pieces {
+  width: 10%;
+}
+
 @keyframes fadeInScale {
   0% {
     opacity: 0;
@@ -105,7 +110,6 @@ html {
   padding: 0.5rem;
   width: 100%;
   box-sizing: border-box;
-  background-color: #2a2a2a;
 }
 
 .difficulty-selector label {
@@ -116,9 +120,8 @@ html {
 .difficulty-selector select {
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  border: 2px solid #3a3a3a;
+  border: 2px solid white;
   font-size: 1rem;
-  background-color: #2a2a2a;
   color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -145,7 +148,6 @@ html {
 .puzzle-piece {
   position: absolute;
   cursor: move;
-  background-color: #fff;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   will-change: transform;
   user-select: none;
@@ -157,9 +159,8 @@ html {
   width: 100%;
   height: auto;
   aspect-ratio: 1;
-  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .puzzle-piece.dragging {
@@ -192,14 +193,6 @@ html {
   transform: none;
 }
 
-.timer-container {
-  width: 100%;
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .puzzle-header {
   display: flex;
   justify-content: space-between;
@@ -219,17 +212,10 @@ html {
 }
 
 .return-to-menu {
-  background: linear-gradient(135deg, #5e4528, #f4d5a6);
-  color: rgb(43, 23, 3);
-  border: 2px double #5e4528;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-family: "MedusaGothic";
-  letter-spacing: 0.1vw;
-  transition: all 0.3s ease;
-  z-index: 1;
+  width: 80%;
+  height: 40%;
+  min-height: 50px;
+  margin-bottom: -15%;
 }
 
 .return-to-menu:hover {
@@ -241,39 +227,84 @@ html {
   transform: translateY(0);
 }
 
+.puzzle-time-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  height: 85%;
+  width: 15%;
+  margin: 2%;
+  margin-left: 3%;
+  margin-top: 0;
+}
+
+.bar-container {
+  height: 100%;
+  width: 74%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 100%;
+}
+
 .timer-bar-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  z-index: 1000;
+  min-width: 480px;
+  height: 40px;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/public/assets/img/progress/progress-bar.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  /* background-color: pink; */
+  transform: rotate(90deg);
+}
+
+.timer-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15%;
 }
 
 .timer-bar {
-  width: 80%;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid rgba(244, 213, 166, 0.3);
-  margin: 0 auto;
+  height: 50%;
+  width: 96%;
+  border-radius: 10px;
+  transform: rotate(180deg);
+  /* background-color: red; */
 }
 
 .timer-progress {
   height: 100%;
   background: linear-gradient(135deg, #372715, #f4d5a6, #7b664d, #f4d5a6);
-  transition: width 0.1s linear;
-  will-change: width;
+  transition: height 0.1s linear;
   backface-visibility: hidden;
-  transform: translateZ(0);
+  border-radius: 10px;
 }
 
 .timer-progress.time-critical {
   background: linear-gradient(135deg, #8B0000, #ff4444, #8B0000, #ff4444);
   animation: pulse 1s infinite;
+}
+
+.puzzle-time-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 74%;
 }
 
 @keyframes pulse {
